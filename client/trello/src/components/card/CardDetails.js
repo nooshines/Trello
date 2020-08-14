@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { ListContext } from "../../context/list/ListContext";
-import editCardContainer from "./editCardContainer";
+import EditCardContainer from "./EditCardContainer";
 
 import { Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
@@ -12,6 +12,9 @@ const useStyle = makeStyles((theme) => ({
   card: {
     padding: theme.spacing(1, 1, 1, 2),
     margin: theme.spacing(1),
+    "&:hover": {
+      backgroundColor: "#f5f5f5",
+    },
   },
   flexContainer: {
     margin: theme.spacing(1),
@@ -35,10 +38,8 @@ const useStyle = makeStyles((theme) => ({
   },
 }));
 
-function CardDetails({ card }) {
-  const { editCard, deleteCard, cards, setCards, getCards } = useContext(
-    ListContext
-  );
+function CardDetails({ card, listIndex }) {
+  const { deleteCard, cards, setCards, getCards } = useContext(ListContext);
   const [openEdit, setOpenEdit] = useState(false);
 
   const classes = useStyle();
@@ -47,11 +48,11 @@ function CardDetails({ card }) {
     console.log("delete clicked");
     const data = await deleteCard(card._id);
     console.log("data", data);
-    // setCards(
-    //   cards.filter((card) => {
-    //     card._id !== data._id;
-    //   })
-    // );
+    const updatedCards = [...cards];
+    updatedCards[listIndex] = updatedCards[listIndex].filter((card) => {
+      return card._id !== data._id;
+    });
+    setCards(updatedCards);
   };
 
   const editHandler = () => {
@@ -66,7 +67,12 @@ function CardDetails({ card }) {
   return (
     <>
       {openEdit ? (
-        <editCardContainer setOpenEdit={setOpenEdit} />
+        <EditCardContainer
+          setOpenEdit={setOpenEdit}
+          oldContent={card.content}
+          cardId={card._id}
+          listIndex={listIndex}
+        />
       ) : (
         <Paper className={classes.card}>
           {card.content}

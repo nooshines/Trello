@@ -19,7 +19,9 @@ function CreateList(props) {
   const classes = useStyles();
   const boardId = props.match.params.boardId;
 
-  const { createList, setLists, lists } = useContext(ListContext);
+  const { createList, setLists, lists, setCards, cards } = useContext(
+    ListContext
+  );
 
   const [title, setTitle] = useState("");
 
@@ -29,6 +31,7 @@ function CreateList(props) {
       const newList = await createList(title, boardId);
       console.log("newlist", newList);
       setLists([...lists, newList]);
+      setCards([...cards, []]);
       setTitle("");
     }
   };

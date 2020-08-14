@@ -34,7 +34,8 @@ const ListContextProvider = (props) => {
     const sourceClone = Array.from(sourceList);
     const destClone = Array.from(destinationList);
     const [removed] = sourceClone.splice(droppableSource.index, 1);
-    removed.listId._id = droppableDestination.droppableId;
+    console.log("removed", removed);
+    removed.listId = droppableDestination.droppableId;
     editCard({ listId: droppableDestination.droppableId }, removed._id);
 
     destClone.splice(droppableDestination.index, 0, removed);
@@ -54,7 +55,7 @@ const ListContextProvider = (props) => {
     reOrderCards(destCloneIds);
   };
 
-  //Get All Lists
+  //Get All Lists and cards
 
   const getLists = async (boardId) => {
     try {
@@ -117,7 +118,8 @@ const ListContextProvider = (props) => {
   //delete list
   const deleteList = async (listId) => {
     try {
-      await axios.delete(`/board/delete/${listId}`);
+      const res = await axios.delete(`/board/delete/${listId}`);
+      return res.data;
     } catch (err) {
       console.log(err);
     }
@@ -147,7 +149,9 @@ const ListContextProvider = (props) => {
     };
     try {
       const res = await axios.patch("/card/updateOrder", { cardIds }, config);
-    } catch {}
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   //Create Card
@@ -178,6 +182,7 @@ const ListContextProvider = (props) => {
     };
     try {
       const res = await axios.patch(`/card/edit/${cardId}`, cardObject, config);
+      return res.data;
     } catch (err) {
       console.log(err);
     }

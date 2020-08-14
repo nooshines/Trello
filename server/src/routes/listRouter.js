@@ -11,7 +11,7 @@ router.get("/lists/:boardId", auth, async (req, res) => {
   try {
     const data = await List.find({
       boardId: req.params.boardId,
-    }).populate("boardId");
+    });
     res.status(200).send(data);
   } catch {
     res.status(500).send("Server Error");

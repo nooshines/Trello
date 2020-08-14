@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { BoardContext } from "../../context/board/BoardContext";
+import EditBoard from "./EditBoard";
 
 import { makeStyles } from "@material-ui/core/styles";
 import Card from "@material-ui/core/Card";
@@ -14,13 +15,16 @@ import DeleteIcon from "@material-ui/icons/Delete";
 
 const useStyles = makeStyles({
   root: {
-    minWidth: 200,
-    maxWidth: 300,
+    minWidth: 300,
+
+    minHeight: 150,
+
     backgroundColor: "#EBECF0",
   },
   flexContainer: {
     display: "flex",
     justifyContent: "flex-end",
+    backgroundColor: "#616161",
   },
   title: {
     fontSize: 14,
@@ -34,13 +38,15 @@ const useStyles = makeStyles({
     },
   },
   onHover: {
+    color: "#fafafa",
     "&:hover": {
-      Color: "EBECF0",
+      Color: "#f5f5f5",
     },
   },
 });
 
 function BoardDetails({ board }) {
+  const [openEdit, setOpenEdit] = useState(false);
   const { deleteBoard, editBoard, getBoards, setBoards, boards } = useContext(
     BoardContext
   );
@@ -48,30 +54,47 @@ function BoardDetails({ board }) {
 
   const editHandler = () => {
     console.log("edit clicked");
+    setOpenEdit(!openEdit);
   };
 
-  const deleteHandler = () => {
+  const deleteHandler = async () => {
     console.log("delete clicked");
-    deleteBoard(board._id);
-    setBoards([...boards]);
-    // getBoards();
+    const data = await deleteBoard(board._id);
+    // setBoards(
+    //   boards.filter((board) => {
+    //     board._id !== data._id;
+    //   })
+    // );
   };
 
   return (
     <Grid item>
-      <Link to={`/board/${board._id}`} style={{ textDecoration: "none" }}>
-        <Card className={classes.root}>
-          <CardContent>
-            <Typography variant="h5" component="h2">
-              {board.title}
-            </Typography>
-          </CardContent>
-        </Card>
-      </Link>
+      {openEdit ? (
+        <EditBoard setOpenEdit={setOpenEdit} />
+      ) : (
+        <Link to={`/board/${board._id}`} style={{ textDecoration: "none" }}>
+          <Card className={classes.root}>
+            <CardContent>
+              <Typography variant="h5" component="h2">
+                {board.title}
+              </Typography>
+            </CardContent>
+          </Card>
+        </Link>
+      )}
+
       <Card>
         <span className={classes.flexContainer}>
-          <EditIcon className={classes.onHover} onClick={editHandler} />
-          <DeleteIcon onClick={deleteHandler} />
+          <EditIcon
+            className={classes.onHover}
+            onClick={editHandler}
+            style={{ cursor: "pointer" }}
+          />
+          <DeleteIcon
+            className={classes.onHover}
+            onClick={deleteHandler}
+            style={{ cursor: "pointer" }}
+          />
         </span>
       </Card>
     </Grid>

@@ -18,11 +18,16 @@ function Navbar(props) {
 
   const authLinks = (
     <>
-      <li> Welcome {user && user.name}</li>
+      <li>
+        {" "}
+        <strong>Welcome {user && user.name}</strong>
+      </li>
       <li>
         <a onClick={onLogout} href="/login">
           <i className="fas fa-sign-out-alt" />{" "}
-          <span className="hide-sm">Logout</span>
+          <span className="hide-sm">
+            <strong>Logout</strong>
+          </span>
         </a>
       </li>
     </>
@@ -32,13 +37,19 @@ function Navbar(props) {
     <>
       <li>
         {" "}
-        <Link to="/about">About</Link>
+        <Link to="/about">
+          <strong>About</strong>
+        </Link>
       </li>
       <li>
-        <Link to="/register">Register</Link>
+        <Link to="/register">
+          <strong>Register</strong>
+        </Link>
       </li>
       <li>
-        <Link to="/login">Login</Link>
+        <Link to="/login">
+          <strong>Login</strong>
+        </Link>
       </li>
     </>
   );

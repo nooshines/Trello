@@ -21,9 +21,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Lists({ boardId }) {
-  const { getLists, lists, reorder, setLists, cards, move } = useContext(
-    ListContext
-  );
+  const {
+    getLists,
+    lists,
+    reorder,
+    setLists,
+    cards,
+    move,
+    setCards,
+  } = useContext(ListContext);
 
   const classes = useStyles();
 
@@ -38,20 +44,10 @@ function Lists({ boardId }) {
   const onDragEnd = (result) => {
     console.log("result", result);
     const { destination, source, draggableId } = result;
-
     //if there is no destination return
     if (!destination) {
       return;
     }
-
-    //user dropped the item to the position that started
-    // if (
-    //   destination.draggableId === source.draggableId &&
-    //   destination.index === source.index
-    // ) {
-    //   return;
-    // }
-
     if (destination.draggableId === source.draggableId) {
       const findListIndex = lists.findIndex((list) => {
         return list._id === source.droppableId;

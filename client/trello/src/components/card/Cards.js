@@ -21,26 +21,27 @@ const Cards = ({ listId, listIndex }) => {
   return (
     <>
       <div className={classes.cardContainer}>
-        {cards[listIndex].map((card, index) => {
-          return (
-            <Draggable
-              key={card._id}
-              draggableId={card._id}
-              index={index}
-              listIndex={listIndex}
-            >
-              {(provided) => (
-                <div
-                  ref={provided.innerRef}
-                  {...provided.dragHandleProps}
-                  {...provided.draggableProps}
-                >
-                  <CardDetails card={card} />
-                </div>
-              )}
-            </Draggable>
-          );
-        })}
+        {cards[listIndex] &&
+          cards[listIndex].map((card, index) => {
+            return (
+              <Draggable
+                key={card._id}
+                draggableId={card._id}
+                index={index}
+                listIndex={listIndex}
+              >
+                {(provided) => (
+                  <div
+                    ref={provided.innerRef}
+                    {...provided.dragHandleProps}
+                    {...provided.draggableProps}
+                  >
+                    <CardDetails card={card} listIndex={listIndex} />
+                  </div>
+                )}
+              </Draggable>
+            );
+          })}
       </div>
       <CreateCardContainer listId={listId} listIndex={listIndex} />
     </>

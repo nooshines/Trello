@@ -11,9 +11,7 @@ router.get("/cards/:listId", auth, async (req, res) => {
   try {
     const data = await Card.find({
       listId: req.params.listId,
-    })
-      .populate("listId")
-      .sort({ order: "asc" });
+    }).sort({ order: "asc" });
     res.status(200).send(data);
   } catch {
     res.status(400).send("Bad request");
@@ -46,7 +44,7 @@ router.post("/new/:listId", auth, async (req, res) => {
       res.status(200).send(card);
     } else res.status(400).send("Bad request");
   } catch {
-    res.status(400).send("Bad request");
+    res.status(500).send("Server error");
   }
 });
 
@@ -89,7 +87,7 @@ router.delete("/delete/:id", auth, async (req, res) => {
     });
     res.status(200).send(data);
   } catch (err) {
-    res.status(400).send(err);
+    res.status(500).send(err);
   }
 });
 
