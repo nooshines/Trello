@@ -6,13 +6,12 @@ export const ListContext = createContext();
 const ListContextProvider = (props) => {
   const [lists, setLists] = useState([]);
   const [cards, setCards] = useState([]);
-  //cards2 {}
 
+  //Reorder
   const reorder = (listIndex, startIndex, endIndex) => {
     const result = Array.from(cards[listIndex]);
     const [removed] = result.splice(startIndex, 1);
     result.splice(endIndex, 0, removed);
-    // setCards(newAllCards);
     console.log("result******", result);
     const updatedCards = [...cards];
     updatedCards[listIndex] = result;
@@ -23,6 +22,7 @@ const ListContextProvider = (props) => {
     reOrderCards(cardIds);
   };
 
+  //Move
   const move = (
     listSourceIndex,
     listDestinationIndex,
@@ -56,7 +56,6 @@ const ListContextProvider = (props) => {
   };
 
   //Get All Lists and cards
-
   const getLists = async (boardId) => {
     try {
       const res = await axios.get(`/list/lists/${boardId}`);
@@ -67,7 +66,6 @@ const ListContextProvider = (props) => {
         })
       ).then((result) => {
         setCards(result);
-        //convert the array to object, set the cards to object
       });
     } catch (err) {
       console.log(err);
@@ -108,7 +106,6 @@ const ListContextProvider = (props) => {
       if (list) {
         list.title = listTitle;
       }
-
       return res;
     } catch (err) {
       console.log(err);
@@ -126,6 +123,8 @@ const ListContextProvider = (props) => {
   };
 
   //************************************/
+  //************************************/
+  //Card
   //************************************/
   //************************************/
 
@@ -182,6 +181,7 @@ const ListContextProvider = (props) => {
     };
     try {
       const res = await axios.patch(`/card/edit/${cardId}`, cardObject, config);
+      res.data.createdAt = res.data.updatedAt;
       return res.data;
     } catch (err) {
       console.log(err);

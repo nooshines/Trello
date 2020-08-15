@@ -71,8 +71,8 @@ router.patch("/edit/:id", auth, async (req, res) => {
 //Delete
 router.delete("/delete/:boardId", auth, async (req, res) => {
   try {
-    const data = await Board.findByIdAndRemove({ _id: req.params.boardId });
-    const lists = await List.find({ ownerId: req.params.boardId });
+    const data = await Board.findByIdAndDelete({ _id: req.params.boardId });
+    const lists = await List.find({ boardId: req.params.boardId });
     if (lists) {
       lists.forEach(async (list) => {
         const cards = await Card.find({ listId: list._id });
@@ -81,7 +81,9 @@ router.delete("/delete/:boardId", auth, async (req, res) => {
         });
         await list.remove();
       });
-    } else res.status(400).send("bad request");
+    } else {
+      res.status(400).send("bad request");
+    }
     res.status(200).send(data);
   } catch (err) {
     console.log("err", err);

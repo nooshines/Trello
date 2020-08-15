@@ -7,6 +7,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import moment from "moment";
+import Grid from "@material-ui/core/Grid";
 
 const useStyle = makeStyles((theme) => ({
   card: {
@@ -60,9 +61,7 @@ function CardDetails({ card, listIndex }) {
     setOpenEdit(!openEdit);
   };
 
-  const momentData = moment(card.createdAt.substring(0, 23))
-    .add(10, "hour")
-    .format("YYYY-mm-dd");
+  const momentData = moment(card.createdAt).format("dddd, MMMM Do YYYY");
 
   return (
     <>

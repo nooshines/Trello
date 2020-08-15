@@ -16,9 +16,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 const useStyles = makeStyles({
   root: {
     minWidth: 300,
-
     minHeight: 150,
-
     backgroundColor: "#EBECF0",
   },
   flexContainer: {
@@ -70,7 +68,11 @@ function BoardDetails({ board }) {
   return (
     <Grid item>
       {openEdit ? (
-        <EditBoard setOpenEdit={setOpenEdit} />
+        <EditBoard
+          setOpenEdit={setOpenEdit}
+          boardTitle={board.title}
+          board={board}
+        />
       ) : (
         <Link to={`/board/${board._id}`} style={{ textDecoration: "none" }}>
           <Card className={classes.root}>
@@ -82,8 +84,7 @@ function BoardDetails({ board }) {
           </Card>
         </Link>
       )}
-
-      <Card>
+      {!openEdit ? (
         <span className={classes.flexContainer}>
           <EditIcon
             className={classes.onHover}
@@ -96,7 +97,9 @@ function BoardDetails({ board }) {
             style={{ cursor: "pointer" }}
           />
         </span>
-      </Card>
+      ) : (
+        <span></span>
+      )}
     </Grid>
   );
 }

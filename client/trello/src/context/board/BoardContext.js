@@ -36,14 +36,25 @@ const BoardContextProvider = (props) => {
   };
 
   //Edit board title
-  const editBoard = async (board) => {
+  const editBoard = async (boardTitle, boardId) => {
     const config = {
       headers: {
         "Content-Type": "application/json",
       },
     };
     try {
-      const res = await axios.put(`/board/${board._id}`, board, config);
+      const res = await axios.patch(
+        `/board/edit/${boardId}`,
+        { title: boardTitle },
+        config
+      );
+      const board = boards.find((board) => {
+        return board._id === boardId;
+      });
+      if (board) {
+        board.title = boardTitle;
+      }
+      return res;
     } catch (err) {
       console.log(err);
     }

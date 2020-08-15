@@ -14,12 +14,6 @@ const schema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
-    cards: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Card",
-      },
-    ],
   },
   { timestamps: true }
 );

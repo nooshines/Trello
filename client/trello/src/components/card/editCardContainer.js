@@ -36,15 +36,11 @@ function EditCardContainer({ setOpenEdit, oldContent, cardId, listIndex }) {
     const updateCard = await editCard({ content }, cardId);
     setOpenEdit(false);
     const updatedCards = [...cards];
-    console.log("updatecard", updateCard);
-    console.log("updatedcardslistindex", updatedCards[listIndex]);
     const findCardIndex = updatedCards[listIndex].findIndex((card) => {
       return card._id === updateCard._id;
     });
-    console.log("findcardindex", findCardIndex);
     if (findCardIndex !== undefined) {
       updatedCards[listIndex][findCardIndex] = updateCard;
-      console.log("updatedcardslis", updatedCards);
       setCards(updatedCards);
     }
   };

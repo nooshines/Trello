@@ -64,14 +64,14 @@ router.patch("/edit/:id", auth, async (req, res) => {
 //Delete
 router.delete("/delete/:id", auth, async (req, res) => {
   try {
-    const data = await List.delete({ boardId: req.params.id });
-    const cards = await Card.find({ boardId: req.params.id });
+    const data = await List.findByIdAndDelete({ _id: req.params.id });
+    const cards = await Card.find({ listId: req.params.id });
     if (cards) {
       cards.forEach(async (card) => {
         await card.remove();
       });
     } else res.status(400).send("bad request");
-    res.status(200).send(list);
+    res.status(200).send(data);
   } catch {
     res.status(500).send("Server Error");
   }
