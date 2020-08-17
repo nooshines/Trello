@@ -9,7 +9,7 @@ import { Draggable } from "react-beautiful-dnd";
 
 const useStyle = makeStyles((theme) => ({
   cardContainer: {
-    marginTop: theme.spacing(4),
+    marginTop: theme.spacing(1),
   },
 }));
 

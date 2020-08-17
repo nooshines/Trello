@@ -19,7 +19,7 @@ const useStyle = makeStyles((theme) => ({
   },
   flexContainer: {
     margin: theme.spacing(1),
-    display: "flex",
+    // display: "flex",
     justifyContent: "flex-end",
   },
   editIcon: {
@@ -48,7 +48,6 @@ function CardDetails({ card, listIndex }) {
   const deleteHandler = async () => {
     console.log("delete clicked");
     const data = await deleteCard(card._id);
-    console.log("data", data);
     const updatedCards = [...cards];
     updatedCards[listIndex] = updatedCards[listIndex].filter((card) => {
       return card._id !== data._id;
@@ -74,19 +73,25 @@ function CardDetails({ card, listIndex }) {
         />
       ) : (
         <Paper className={classes.card}>
-          {card.content}
-          <span className={classes.flexContainer}>
-            <DeleteIcon
-              className={classes.deleteIcon}
-              onClick={deleteHandler}
-              style={{ cursor: "pointer" }}
-            />
-            <EditIcon
-              className={classes.editIcon}
-              onClick={editHandler}
-              style={{ cursor: "pointer" }}
-            />
-          </span>
+          <Grid item container xs={12}>
+            <Grid item xs={10}>
+              {card.content}
+            </Grid>
+            <Grid item justify="flex-end" xs={2}>
+              <DeleteIcon
+                fontSize="small"
+                className={classes.deleteIcon}
+                onClick={deleteHandler}
+                style={{ cursor: "pointer" }}
+              />
+              <EditIcon
+                fontSize="small"
+                className={classes.editIcon}
+                onClick={editHandler}
+                style={{ cursor: "pointer" }}
+              />
+            </Grid>
+          </Grid>
           <div>
             <small className={classes.dateColor}>{momentData}</small>
           </div>

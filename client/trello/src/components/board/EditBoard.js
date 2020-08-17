@@ -64,8 +64,12 @@ const EditBoard = ({ boardTitle, board, setOpenEdit }) => {
           className={classes.flexContainer}
           style={{ color: "#fafafa", cursor: "pointer" }}
         >
-          <span onClick={editHandler}>Save </span>
-          <span onClick={cancelHandler}>cancel</span>
+          <span onClick={editHandler} style={{ paddingRight: "15px" }}>
+            Save{" "}
+          </span>
+          <span onClick={cancelHandler} style={{ paddingRight: "15px" }}>
+            cancel
+          </span>
         </span>
       </Card>
     </>

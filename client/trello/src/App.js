@@ -28,16 +28,14 @@ function App() {
         <AlertState>
           <BrowserRouter>
             <Navbar />
-            <div className="container">
-              <Alerts />
-              <Switch>
-                <PrivateRoute exact path="/" component={Home} />
-                <Route exact path="/About" component={About} />
-                <Route exact path="/login" component={Login} />
-                <Route exact path="/register" component={Register} />
-                <Route exact path="/board/:boardId" component={ListsHome} />
-              </Switch>
-            </div>
+            <Alerts />
+            <Switch>
+              <PrivateRoute exact path="/" component={Home} />
+              <Route exact path="/About" component={About} />
+              <Route exact path="/login" component={Login} />
+              <Route exact path="/register" component={Register} />
+              <Route exact path="/board/:boardId" component={ListsHome} />
+            </Switch>
           </BrowserRouter>
         </AlertState>
       </AuthState>

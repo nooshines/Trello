@@ -7,7 +7,7 @@ import TextField from "@material-ui/core/TextField";
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
-      margin: theme.spacing(1),
+      margin: theme.spacing(3),
       width: "25ch",
     },
   },
@@ -50,13 +50,6 @@ function CreateBoard(props) {
           value={title}
           onChange={onChangeHandler}
         />
-        {/* <input
-          type="text"
-          name="title"
-          placeholder="+ new board "
-          value={title}
-          onChange={onChangeHandler}
-        /> */}
       </form>
     </>
   );

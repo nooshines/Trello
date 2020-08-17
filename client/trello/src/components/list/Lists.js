@@ -42,22 +42,22 @@ function Lists({ boardId }) {
   };
 
   const onDragEnd = (result) => {
-    console.log("result", result);
     const { destination, source, draggableId } = result;
+
     //if there is no destination return
     if (!destination) {
       return;
     }
+    //within one list
     if (destination.draggableId === source.draggableId) {
       const findListIndex = lists.findIndex((list) => {
         return list._id === source.droppableId;
       });
-      console.log("source", source);
-      console.log("findListIndex", findListIndex);
       if (findListIndex !== undefined) {
         reorder(findListIndex, source.index, destination.index);
       }
     }
+    //between different lists
     if (destination.droppableId !== source.droppableId) {
       const findListSourceIndex = lists.findIndex((list) => {
         return list._id === source.droppableId;
@@ -65,6 +65,7 @@ function Lists({ boardId }) {
       const findListDestinationIndex = lists.findIndex((list) => {
         return list._id === destination.droppableId;
       });
+
       if (
         findListDestinationIndex !== undefined &&
         findListSourceIndex !== undefined

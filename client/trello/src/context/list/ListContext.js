@@ -7,21 +7,26 @@ const ListContextProvider = (props) => {
   const [lists, setLists] = useState([]);
   const [cards, setCards] = useState([]);
 
+  //reorder(findListIndex, source.index, destination.index);
   //Reorder
   const reorder = (listIndex, startIndex, endIndex) => {
     const result = Array.from(cards[listIndex]);
+    //remove from
     const [removed] = result.splice(startIndex, 1);
+    //add to
     result.splice(endIndex, 0, removed);
-    console.log("result******", result);
+    //update state
     const updatedCards = [...cards];
     updatedCards[listIndex] = result;
     setCards(updatedCards);
+    //reorder Backend
     const cardIds = result.map((card) => {
       return card._id;
     });
     reOrderCards(cardIds);
   };
 
+  //move(findListSourceIndex,findListDestinationIndex,source,destination);
   //Move
   const move = (
     listSourceIndex,
@@ -33,16 +38,15 @@ const ListContextProvider = (props) => {
     const destinationList = cards[listDestinationIndex];
     const sourceClone = Array.from(sourceList);
     const destClone = Array.from(destinationList);
+    //remove
     const [removed] = sourceClone.splice(droppableSource.index, 1);
-    console.log("removed", removed);
     removed.listId = droppableDestination.droppableId;
     editCard({ listId: droppableDestination.droppableId }, removed._id);
-
+    //add
     destClone.splice(droppableDestination.index, 0, removed);
-
+    //update state
     const updatedCards = [...cards];
     updatedCards[listSourceIndex] = sourceClone;
-
     updatedCards[listDestinationIndex] = destClone;
     setCards(updatedCards);
     const sourceCloneIds = sourceClone.map((card) => {
@@ -54,6 +58,12 @@ const ListContextProvider = (props) => {
     });
     reOrderCards(destCloneIds);
   };
+
+  //************************************/
+  //************************************/
+  //list
+  //************************************/
+  //************************************/
 
   //Get All Lists and cards
   const getLists = async (boardId) => {
@@ -115,7 +125,7 @@ const ListContextProvider = (props) => {
   //delete list
   const deleteList = async (listId) => {
     try {
-      const res = await axios.delete(`/board/delete/${listId}`);
+      const res = await axios.delete(`/list/delete/${listId}`);
       return res.data;
     } catch (err) {
       console.log(err);

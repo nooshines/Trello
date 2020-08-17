@@ -13,7 +13,10 @@ import Grid from "@material-ui/core/Grid";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
+  card: {
+    margin: theme.spacing(2),
+  },
   root: {
     minWidth: 300,
     minHeight: 150,
@@ -41,13 +44,12 @@ const useStyles = makeStyles({
       Color: "#f5f5f5",
     },
   },
-});
+}));
 
 function BoardDetails({ board }) {
   const [openEdit, setOpenEdit] = useState(false);
-  const { deleteBoard, editBoard, getBoards, setBoards, boards } = useContext(
-    BoardContext
-  );
+
+  const { deleteBoard, setBoards, boards } = useContext(BoardContext);
   const classes = useStyles();
 
   const editHandler = () => {
@@ -58,15 +60,17 @@ function BoardDetails({ board }) {
   const deleteHandler = async () => {
     console.log("delete clicked");
     const data = await deleteBoard(board._id);
-    // setBoards(
-    //   boards.filter((board) => {
-    //     board._id !== data._id;
-    //   })
-    // );
+    console.log("data", data);
+    const allBoards = [...boards];
+    const updatedBoards = allBoards.filter((board) => {
+      return board._id !== data._id;
+    });
+
+    setBoards(updatedBoards);
   };
 
   return (
-    <Grid item>
+    <Grid item className={classes.card}>
       {openEdit ? (
         <EditBoard
           setOpenEdit={setOpenEdit}

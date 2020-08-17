@@ -63,7 +63,8 @@ const BoardContextProvider = (props) => {
   //delete board
   const deleteBoard = async (boardId) => {
     try {
-      await axios.delete(`/board/delete/${boardId}`);
+      const res = await axios.delete(`/board/delete/${boardId}`);
+      return res.data;
     } catch (err) {
       console.log(err);
     }

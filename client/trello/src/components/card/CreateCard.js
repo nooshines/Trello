@@ -33,14 +33,14 @@ function CreateCard({ setOpen, listId, listIndex }) {
   const [content, setContent] = useState("");
 
   const createCardHandler = async (e) => {
-    e.preventDefault();
     if (content) {
+      const cardContent = content;
+      setContent("");
       const newCard = await createCard(content, cards.length, listId);
-      console.log("newCard", newCard);
       const updateCards = [...cards];
       updateCards[listIndex].push(newCard);
       setCards(updateCards);
-      setContent("");
+
       setOpen(false);
     }
   };
