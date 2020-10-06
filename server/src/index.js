@@ -18,6 +18,8 @@ const boardRouter = require("./routes/boardRouter");
 const listRouter = require("./routes/listRouter");
 const cardRouter = require("./routes/cardRouter");
 
+const isProd = process.env.NODE_ENV === "production";
+
 if (isProd) {
   console.log("Express app running in production");
   app.use(express.static("./public"));
