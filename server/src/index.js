@@ -7,7 +7,7 @@ require("dotenv").config();
 require("./mongo");
 
 //variables
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 //setup express app
 const app = express();
