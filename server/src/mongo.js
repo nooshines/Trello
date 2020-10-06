@@ -1,6 +1,9 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost:27017/trello", {
+const uri = process.env.MONGODB_URI || "mongodb://localhost/trello";
+
+mongoose.connect(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
