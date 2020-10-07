@@ -1,14 +1,12 @@
 echo "*** STARTING BUILD PROCESS"
 
 echo "*** Building Frontend ***"
-cd client
-cd trello
+cd client/trello
 npm install
 npm run build
 
 echo "*** Copy React build to Express public ***"
-cd ..
-cd ..
+cd ../..
 mkdir -p ./server/public
 cp -r ./client/trello/build/*  ./server/public/
 
